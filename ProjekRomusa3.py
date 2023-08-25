@@ -11,6 +11,7 @@ cam = cv2.VideoCapture(0)  #default 0 untuk webcam laptop
 
 pir_sensor = 27
 buzzer = 13
+dimension = (480,320)
 
 path = os.getcwd() + "/capture"
 GPIO.setmode(GPIO.BCM)  #GPIO.setmode(GPIO.BCM) 
@@ -29,6 +30,8 @@ def open_camera():
         if not ret:
             print("failed to open camera")
             break
+        
+        frame = cv2.resize(frame,dimension)
         
         cv2.imshow("streaming camera", frame) 
                 
