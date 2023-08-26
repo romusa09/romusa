@@ -12,8 +12,8 @@ import random
 
 TOKEN = "BBFF-4YlVDsxgumjO0eKxjYWtmZfAZDODRG"  # Put your TOKEN here
 DEVICE_LABEL = "romusa9"  # Put your device label here 
-VARIABLE_LABEL_1 = "buzzer"  # Put your first variable label here
-VARIABLE_LABEL_2 = "camera"  # Put your second variable label here
+VARIABLE_LABEL_1 = "temperature"  # Put your first variable label here
+VARIABLE_LABEL_2 = "humidity"  # Put your second variable label here
 VARIABLE_LABEL_3 = "pir"  # Put your second variable label here
 
 
