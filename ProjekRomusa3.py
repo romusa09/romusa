@@ -10,13 +10,15 @@ cam = cv2.VideoCapture(0)  #default 0 untuk webcam laptop
                             #selain 0 (1), (2) untuk webcam
 
 pir_sensor = 27
-buzzer = 13
+buzzer = 19
 dimension = (480,320)
 
 path = os.getcwd() + "/capture"
 GPIO.setmode(GPIO.BCM)  #GPIO.setmode(GPIO.BCM) 
-GPIO.setup(buzzer,GPIO.OUT)
 GPIO.setup(pir_sensor, GPIO.IN)
+GPIO.setwarnings(False)
+GPIO.setup(buzzer, GPIO.OUT, initial=GPIO.HIGH)
+
 
 def start_open_camera():
     t1  = threading.Thread(target=open_camera)
@@ -76,6 +78,7 @@ def send_image_to_telegram(file_img):
 		print(f'[FAILED] send image to telegram with error = {e}' )
 
 if __name__ == '__main__':
+    GPIO.output(buzzer, GPIO.LOW)
     if not os.path.exists(path):
         print("[INFO] Membuat folder capture")
         os.mkdir(path)
@@ -88,9 +91,20 @@ if __name__ == '__main__':
     while True:
         if GPIO.input(pir_sensor): #ketika pir aktif   
             print("[INFO] PIR  terdeteksi")
+            
+            GPIO.output(buzzer,GPIO.LOW)
+
+            print("BUZZER NYALA")
+
+            time.sleep(1)
+    
             capture_image()
         else:
             print("[INFO] PIR tidak terdeteksi")
             
+            GPIO.output(buzzer,GPIO.HIGH)
+
+            print("BUZZER MATI")
+
+            time.sleep(1)
         time.sleep(2)
-        
