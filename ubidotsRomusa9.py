@@ -2,30 +2,23 @@ import time
 import requests
 import math
 import random
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
-# GPIO.setwarnigs(False)
-# PIR = 19
+GPIO.setwarnings(False)
+PIR = 27
 
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(PIR, GPIO.INPUT)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(PIR, GPIO.IN)
 
 TOKEN = "BBFF-4YlVDsxgumjO0eKxjYWtmZfAZDODRG"  # Put your TOKEN here
 DEVICE_LABEL = "romusa9"  # Put your device label here 
-VARIABLE_LABEL_1 = "temperature"  # Put your first variable label here
-VARIABLE_LABEL_2 = "humidity"  # Put your second variable label here
-VARIABLE_LABEL_3 = "pir"  # Put your second variable label here
+VARIABLE_LABEL_1 = "pir"
 
 
-def build_payload(variable_1, variable_2,variable_3):
-    # Creates two random values for sending data
-    value_1 = random.randint(0, 50)  #temprature
-    value_2 = random.randint(0, 85) #humidity
-    value_3 = random.randint(0,1)
+def build_payload(variable_1):
+    value_1 = GPIO.input(27)
 
-    payload = {variable_1: value_1,
-               variable_2: value_2,
-               variable_3 : value_3}  #dictionary / JSON
+    payload = {variable_1: value_1}  #dictionary / JSON
 
     return payload
 
@@ -59,7 +52,7 @@ def post_request(payload):
 
 def main():
     payload = build_payload(
-        VARIABLE_LABEL_1, VARIABLE_LABEL_2, VARIABLE_LABEL_3)
+        VARIABLE_LABEL_1)
 
     print("[INFO] Attemping to send data")
     print("[INFO] send payload to ubidots => " + str(payload))
