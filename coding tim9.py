@@ -77,6 +77,20 @@ def send_image_to_telegram(file_img):
 	except Exception as e:
 		print(f'[FAILED] send image to telegram with error = {e}' )
 
+def send_to_telegram(message):
+
+    apiToken = "5841063976:AAH6AZB5Y-NjnOlR8xTDyrSOlUrTkuNBYIA"
+    chatID = "1328040261"
+    apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
+
+    try:
+        response = requests.post(apiURL, json={'chat_id': chatID, 'text': message})
+        print(response.text)
+    except Exception as e:
+        print(e)
+
+send_to_telegram("Warning")
+
 if __name__ == '__main__':
     GPIO.output(buzzer, GPIO.LOW)
     if not os.path.exists(path):
@@ -96,7 +110,7 @@ if __name__ == '__main__':
 
             print("BUZZER NYALA")
 
-            time.sleep(1)
+            time.sleep(0.5)
     
             capture_image()
         else:
@@ -106,5 +120,5 @@ if __name__ == '__main__':
 
             print("BUZZER MATI")
 
-            time.sleep(1)
-        time.sleep(2)
+            time.sleep(0.5)
+        time.sleep(0.5)
